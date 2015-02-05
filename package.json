@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "cli-clear": "^1.0.2",
+    "colors": "^1.0.3"
+  }
+}
