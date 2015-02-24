@@ -33,7 +33,8 @@ var bobCypher = crypto.createDecipher(cypher, bobHashedSecret);
 var plainText = bobCypher.update(cypherText).toString();
 //console.log(plainText);
 
-var eveCypher = crypto.createDecipher(cypher, eveSecret);
+var eveHashedSecret = crypto.createHash(hash).update(eveSecret).digest('binary');
+var eveCypher = crypto.createDecipher(cypher, eveHashedSecret);
 var eveText = eveCypher.update(cypherText).toString();
 //console.log(eveText);
 
@@ -114,7 +115,7 @@ var slides = [
     console.log(eve + ' tries to compute the same secret.\n');
     console.log(colors.yellow('var eveDH = crypto.getDiffieHellman(group);'));
     console.log(colors.yellow('eveDH.generateKeys();'));
-    console.log(colors.yellow('var eveSecret = eveDH.computeSecret(aliceDH.getPublicKeys(), null, hex);\n'));
+    console.log(colors.yellow('var eveSecret = eveDH.computeSecret(aliceDH.getPublicKeys(), null, "hex");\n'));
   }, 12000,
   function () {
     console.log(eve + '\'s secret === ' + alice + '\'s secret // ' +
@@ -172,7 +173,7 @@ var slides = [
     clear();
     console.log(eve + ' has intercepted the cyphertext, cypher, hash, and tries to decrypt it.\n');
     console.log(colors.yellow('var eveHashedSecret = crypto.createHash(hash).update(eveSecret).digest("binary");'));
-    console.log(colors.yellow('var eveCypher = crypto.createDecipher(alg, eveSecret);'));
+    console.log(colors.yellow('var eveCypher = crypto.createDecipher(alg, eveHashedSecret);'));
     console.log(colors.yellow('console.log(eveCypher.update(cypherText).toString());\n'));
     console.log(eveText);
     console.log('\nHere\'s where ' + eve + ' realizes her secret is not correct.');
